@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import 'katex/dist/katex.min.css';
 import { ClerkProvider } from '@clerk/nextjs';
-import { Inter } from 'next/font/google';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,7 +15,6 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "Create Next App",

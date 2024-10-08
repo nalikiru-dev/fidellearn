@@ -10,7 +10,7 @@ export default function Page() {
         },
       }} />
       <p className="mt-4 text-white">
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <Link href="/sign-up" className="text-indigo-200 hover:text-indigo-100 underline">
           Sign up
         </Link>

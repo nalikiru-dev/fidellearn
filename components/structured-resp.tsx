@@ -93,7 +93,7 @@ export const StructuredResponse: React.FC<StructuredResponseProps> = ({ content 
           return <br key={Math.random()} />;
         }
         
-        const props: any = {};
+        const props: Record<string, unknown> = {};
         Array.from(element.attributes).forEach(attr => {
           props[attr.name] = attr.value;
         });

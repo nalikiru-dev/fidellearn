@@ -3,6 +3,7 @@
 import { useUser } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Image from 'next/image';
 
 export function UserProfilePage() {
   const { user } = useUser()
@@ -14,7 +15,12 @@ export function UserProfilePage() {
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-xl overflow-hidden md:max-w-2xl">
         <div className="md:flex">
           <div className="md:flex-shrink-0">
-            <img className="h-48 w-full object-cover md:w-48" src={user.imageUrl} alt={user.fullName || 'User'} />
+            <Image
+              src={user.imageUrl}
+              alt={user.fullName || 'User'}
+              width={500}
+              height={300}
+            />
           </div>
           <div className="p-8">
             <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">User Profile</div>
@@ -31,7 +37,11 @@ export function UserProfilePage() {
                 </div>
                 <div className="py-3 flex justify-between text-sm font-medium">
                   <dt className="text-gray-500">Created At</dt>
-                  <dd className="text-gray-900">{new Date(user.createdAt).toLocaleDateString()}</dd>
+                  <dd className="text-gray-900">
+                    {user.createdAt 
+                      ? new Date(user.createdAt).toLocaleDateString()
+                      : 'Not available'}
+                  </dd>
                 </div>
               </dl>
             </div>
