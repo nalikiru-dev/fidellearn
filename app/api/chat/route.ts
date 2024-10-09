@@ -34,14 +34,24 @@ Your response should be informative, engaging, and tailored to a high school stu
       },
     })
 
-    let aiResponse = response.generated_text.split('[/INST]]' || '[/INST]')[1]?.trim()
+    const delimiters = ['[/INST]]', '[/INST]']
+    let aiResponse = ''
+
+    for (const delimiter of delimiters) {
+      const parts = response.generated_text.split(delimiter)
+      if (parts.length > 1) {
+        aiResponse = parts[1].trim()
+        break
+      }
+    }
+
     if (!aiResponse) {
       aiResponse = "I apologize, but I couldn't generate a response. Please try rephrasing your question."
     }
 
     // Add a reminder about FideLearn and Kirubel if it's not already mentioned
     if (!aiResponse.toLowerCase().includes('')) {
-      aiResponse += "(FAI)"
+      aiResponse += " (Created by FideLearn, developed by Kirubel B.)"
     }
 
     return NextResponse.json({ response: aiResponse })

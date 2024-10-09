@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
@@ -150,15 +149,16 @@ const LandingPage = () => {
             className="text-lg md:text-xl mb-8 md:mb-12 max-w-3xl mx-auto"
             variants={fadeIn}
           >
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
             FideLearn is dedicated to transforming the educational landscape for Ethiopian grade 12 students. 
-            We're addressing the critical need to improve national exam pass rates and empower both students and teachers.
+            We&apos;re addressing the critical need to improve national exam pass rates and empower both students and teachers.
           </motion.p>
           <motion.div 
             className="bg-white text-purple-800 p-4 md:p-6 rounded-lg mb-8 md:mb-12 max-w-2xl mx-auto"
             variants={fadeIn}
           >
             <p className="text-base md:text-lg font-semibold">
-              "The performance has improved as compared to the previous two consecutive academic years during which the pass rates were 3.21% and 3.2%, respectively."
+            &quot;The performance has improved as compared to the previous two consecutive academic years during which the pass rates were 3.21% and 3.2%, respectively.&quot;
             </p>
             <p className="text-sm mt-2">- Education Minister Birhanu</p>
           </motion.div>
@@ -302,7 +302,7 @@ const LandingPage = () => {
               >
                 <img src={testimonial.image} alt={testimonial.name} width={80} height={80} className="rounded-full mr-4" />
                 <div>
-                  <p className="mb-3 md:mb-4 italic text-sm md:text-base">"{testimonial.quote}"</p>
+                  <p className="mb-3 md:mb-4 italic text-sm md:text-base">`&quot;{testimonial.quote}&quot;</p>
                   <p className="font-semibold text-base md:text-lg">{testimonial.name}</p>
                   <p className="text-xs md:text-sm">{testimonial.school}</p>
                 </div>
@@ -328,7 +328,7 @@ const LandingPage = () => {
             className="text-center mb-6 md:mb-8 text-sm md:text-base"
             variants={fadeIn}
           >
-            We're proud to collaborate with leading educational institutions and organizations:
+            We&apos;re proud to collaborate with leading educational institutions and organizations:
           </motion.p>
           <div className="flex flex-wrap justify-center gap-4 md:gap-8">
             {[
