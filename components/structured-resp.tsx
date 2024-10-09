@@ -26,9 +26,11 @@ export const StructuredResponse: React.FC<StructuredResponseProps> = ({ content 
     formattedText = formattedText.replace(/^–\s/gm, '• ');
     
     // Convert ### to h1 headers
-    formattedText = formattedText.replace(/^###\s*(.*?)$/gm, '<h1 class="text-2xl font-bold mb-2">$1</h1>');
+   formattedText = formattedText.replace(/^###\s*(.*?)$/gm, '<h1 class="text-2xl font-bold mb-2">$1</h1>');
+   formattedText = formattedText.replace(/^##\s*(.*?)$/gm, '<h4 class="text-xl font-bold">$1</h4>');
     
     // Handle math expressions
+    formattedText = formattedText.replace(/\$\$(.*?)\$\$/g, (match, p1) => `<math-block>${p1}</math-block>`);
     formattedText = formattedText.replace(/\$\$(.*?)\$\$/g, (match, p1) => `<math-block>${p1}</math-block>`);
     formattedText = formattedText.replace(/\$(.*?)\$/g, (match, p1) => `<math-inline>${p1}</math-inline>`);
     
@@ -37,6 +39,8 @@ export const StructuredResponse: React.FC<StructuredResponseProps> = ({ content 
     
     // Convert newlines to <br> tags
     formattedText = formattedText.replace(/\n/g, '<br/>');
+
+    formattedText = formattedText.replace(/^\*/gm, '• ');
     
     return formattedText;
   };

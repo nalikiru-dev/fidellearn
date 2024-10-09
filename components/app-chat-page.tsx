@@ -61,18 +61,24 @@ export function Chat() {
       })
   
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'Failed to get response')
+        throw new Error('Failed to get response')
       }
   
       const data = await response.json()
+      if (data.error) {
+        throw new Error(data.error)
+      }
+      
       const aiResponse = data.response
   
       const assistantMessage: Message = { role: 'assistant', content: aiResponse }
       setMessages((prev) => [...prev, assistantMessage])
     } catch (error) {
       console.error('Error:', error)
-      setMessages((prev) => [...prev, { role: 'assistant', content: "I'm sorry, I encountered an error. Please try again." }])
+      setMessages((prev) => [...prev, { 
+        role: 'assistant', 
+        content: "I'm sorry, I encountered an error while processing your request. Please try again or rephrase your question." 
+      }])
     } finally {
       setIsLoading(false)
     }
@@ -86,15 +92,15 @@ export function Chat() {
   return (
     <div className="flex flex-col h-screen bg-gradient-to-r from-purple-500 to-indigo-600">
       <header className="bg-white text-gray-800 py-4 shadow-md">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-purple-600">FideLearn AI Tutor</h1>
-          <div className="flex items-center space-x-4">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+          <h1 className="text-2xl font-bold text-purple-600 mb-4 md:mb-0">FideLearn AI Tutor</h1>
+          <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
             <span className="text-gray-600">Welcome, {user?.firstName || 'User'}!</span>
             <Link href="/profile">
-              <Button variant="outline">Profile</Button>
+              <Button variant="outline" className="w-full md:w-auto">Profile</Button>
             </Link>
             <UserButton afterSignOutUrl="/sign-in" />
-            <Button variant="destructive" onClick={handleSignOut}>Sign Out</Button>
+            <Button variant="destructive" onClick={handleSignOut} className="w-full md:w-auto">Sign Out</Button>
           </div>
         </div>
       </header>
@@ -138,7 +144,7 @@ export function Chat() {
               ))}
             </div>
           </ScrollArea>
-          <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
+          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-2 mt-4">
             <Input
               type="text"
               value={input}
@@ -147,7 +153,7 @@ export function Chat() {
               className="flex-grow bg-white"
               disabled={isLoading || !subject}
             />
-            <Button type="submit" disabled={isLoading || !subject} className="bg-purple-600 hover:bg-purple-700 text-white">
+            <Button type="submit" disabled={isLoading || !subject} className="bg-purple-600 hover:bg-purple-700 text-white w-full md:w-auto">
               {isLoading ? 'Thinking...' : 'Send'}
             </Button>
           </form>

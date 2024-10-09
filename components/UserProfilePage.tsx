@@ -12,10 +12,10 @@ export function UserProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white rounded-lg shadow-xl overflow-hidden md:max-w-2xl">
+      <div className="max-w-md mx-auto bg-white rounded-lg shadow-xl overflow-hidden md:max-w-5xl">
         <div className="md:flex">
           <div className="md:flex-shrink-0">
-            <Image
+          <img
               src={user.imageUrl}
               alt={user.fullName || 'User'}
               width={500}
@@ -24,10 +24,10 @@ export function UserProfilePage() {
           </div>
           <div className="p-8">
             <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">User Profile</div>
-            <h2 className="mt-2 text-2xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-3xl sm:leading-9">
+            <h2 className="mt-2 text-xl md:text-2xl leading-7 font-semibold text-gray-900">
               {user.fullName}
             </h2>
-            <p className="mt-2 text-gray-600">{user.primaryEmailAddress?.emailAddress}</p>
+            <p className="mt-2 text-gray-600 text-sm md:text-base">{user.primaryEmailAddress?.emailAddress}</p>
             <div className="mt-4">
               <h3 className="text-lg font-medium text-gray-900">Account Details</h3>
               <dl className="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200">

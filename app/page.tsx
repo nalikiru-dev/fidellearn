@@ -3,28 +3,33 @@
 import { useUser } from '@clerk/nextjs'
 import { Chat } from '@/components/app-chat-page'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import LandingPage from './landing-page'
 
 export default function Home() {
   const { isSignedIn, isLoaded } = useUser()
   const router = useRouter()
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      router.push('/sign-in')
+    if (isLoaded) {
+      setIsReady(true)
+      if (!isSignedIn) {
+        router.push('/')
+      }
     }
   }, [isSignedIn, isLoaded, router])
 
-  if (!isLoaded) {
+  if (!isReady || !isLoaded) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
-        <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." className="w-16 h-16" />
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
       </div>
     )
   }
 
   if (!isSignedIn) {
-    return null // This will be briefly shown before the redirect
+    return <LandingPage />
   }
 
   return (

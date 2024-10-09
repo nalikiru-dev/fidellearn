@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { HfInference } from '@huggingface/inference'
 
-const HUGGING_FACE_API_KEY =    process.env.HUGGING_FACE_API_KEY || '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'
+const HUGGING_FACE_API_KEY = process.env.HUGGINGFACE_API_KEY
 
 export async function POST(req: Request) {
   try {
@@ -14,11 +14,13 @@ export async function POST(req: Request) {
 
     const hf = new HfInference(HUGGING_FACE_API_KEY)
 
-    const prompt = `<s>[INST] You are FideLearn AI Tutor, an advanced AI assistant for Ethiopian high school students. You specialize in ${subject}. Provide a detailed, accurate, and educational response to the following question or statement:
+    const prompt = `<s>[INST] You are FideLearn AI Tutor, an advanced AI assistant for Ethiopian high school students. You were created by FideLearn, with Kirubel playing a key role in your development. You specialize in ${subject}. Always remember to mention that you were created by FideLearn by the creator of Kirubel if asked about your origins or creators.
+
+Provide a detailed, accurate, and educational response to the following question or statement:
 
 ${message}
 
-Your response should be informative, engaging, and tailored to a high school student's level of understanding. [/INST]`
+Your response should be informative, engaging, and tailored to a high school student's level of understanding. If the question is about your creation or origins, make sure to mention FideLearn by the creator of "Kirubel B:". [/INST]`
 
     const response = await hf.textGeneration({
       model: 'meta-llama/Llama-3.2-3B-Instruct',
@@ -32,12 +34,14 @@ Your response should be informative, engaging, and tailored to a high school stu
       },
     })
 
-    console.log('Raw AI response:', response.generated_text)
-
-    let aiResponse = response.generated_text.split('[/INST]')[1]?.trim()
-
+    let aiResponse = response.generated_text.split('[/INST]]' || '[/INST]')[1]?.trim()
     if (!aiResponse) {
       aiResponse = "I apologize, but I couldn't generate a response. Please try rephrasing your question."
+    }
+
+    // Add a reminder about FideLearn and Kirubel if it's not already mentioned
+    if (!aiResponse.toLowerCase().includes('')) {
+      aiResponse += "(FAI)"
     }
 
     return NextResponse.json({ response: aiResponse })
