@@ -1,6 +1,7 @@
+import React from 'react';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import StaffDashboard from '@/components/Dashboard/Staff/StaffDashboard';
 import DashboardLayout from '@/components/DashboardLayout';
+import StaffDashboard from '@/components/Dashboard/Staff/StaffDashboard';
 
 export default function StaffDashboardPage() {
   return (

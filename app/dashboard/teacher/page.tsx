@@ -1,6 +1,7 @@
+import React from 'react';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import TeacherDashboard from '@/components/Dashboard/Teacher/TeacherDashboard';
 import DashboardLayout from '@/components/DashboardLayout';
+import TeacherDashboard from '@/components/Dashboard/Teacher/TeacherDashboard';
 
 export default function TeacherDashboardPage() {
   return (

@@ -15,6 +15,9 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  const { ...calendarProps } = props as CalendarProps
+  const { ...buttonProps } = props as React.ButtonHTMLAttributes<HTMLButtonElement>
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}

@@ -3,7 +3,7 @@
 import React from 'react'
 import { CheckCircle, XCircle, Info, X } from 'lucide-react'
 
-interface ToastProps {
+export interface ToastProps {
   title: string
   description?: string
   type?: 'success' | 'error' | 'info'
@@ -28,4 +28,12 @@ export const Toast: React.FC<ToastProps> = ({ title, description, type = 'info',
       </div>
     </div>
   )
+}
+
+export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <>{children}</>
+}
+
+export const ToastViewport: React.FC = () => {
+  return <div id="toast-viewport" />
 }

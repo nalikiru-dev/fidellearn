@@ -2,17 +2,17 @@
 
 import { useState, useCallback } from 'react'
 
-interface ToastProps {
+export interface Toast {
   title: string;
   description?: string;
   type?: 'success' | 'error' | 'info';
 }
 
 export function useToast() {
-  const [toast, setToast] = useState<ToastProps | null>(null);
+  const [toast, setToast] = useState<Toast | null>(null);
 
-  const showToast = useCallback((props: ToastProps) => {
-    setToast(props);
+  const showToast = useCallback((newToast: Toast) => {
+    setToast(newToast);
     setTimeout(() => {
       setToast(null);
     }, 3000);

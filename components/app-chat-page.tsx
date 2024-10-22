@@ -6,8 +6,7 @@ import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { StructuredResponse } from './structured-resp'
-import { useUser, UserButton, useClerk } from '@clerk/nextjs'
-import Link from 'next/link'
+import { useUser, useClerk } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 
 type Message = {
@@ -82,11 +81,6 @@ const AppChatPage = () => {
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const handleSignOut = async () => {
-    await signOut()
-    router.push('/sign-in')
   }
 
   return (
