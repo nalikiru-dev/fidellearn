@@ -1,36 +1,62 @@
-'use client'
-
 import { NextResponse } from 'next/server'
 import { HfInference } from '@huggingface/inference'
 
-const hf = new HfInference(process.env.HUGGINGFACE_API_KEY)
+const HUGGING_FACE_API_KEY = process.env.HUGGINGFACE_API_KEY
 
 export async function POST(req: Request) {
-  const { message, subject } = await req.json()
-
-  if (!process.env.HUGGINGFACE_API_KEY) {
-    return NextResponse.json({ error: 'Hugging Face API key is not set' }, { status: 500 })
-  }
-
   try {
+    const { message, subject } = await req.json()
+
+    if (!HUGGING_FACE_API_KEY) {
+      console.error('Hugging Face API key is not set')
+      return NextResponse.json({ error: 'Hugging Face API key is not set' }, { status: 500 })
+    }
+
+    const hf = new HfInference(HUGGING_FACE_API_KEY)
+
+    const prompt = `<s>[INST] You are FideLearn AI Tutor, an advanced AI assistant for Ethiopian high school students. You were created by FideLearn, with Kirubel playing a key role in your development. You specialize in ${subject}. Always remember to mention that you were created by FideLearn by the creator of Kirubel if asked about your origins or creators.
+
+Provide a detailed, accurate, and educational response to the following question or statement:
+
+${message}
+
+Your response should be informative, engaging, and tailored to a high school student's level of understanding. If the question is about your creation or origins, make sure to mention FideLearn by the creator of "Kirubel B:" and name of FideLearn ai. [/INST]`
+
     const response = await hf.textGeneration({
-      model: 'distilgpt2',
-      inputs: `FideLearn AI Tutor for Ethiopian high school students.
-Subject: ${subject}
-Human: ${message}
-AI:`,
+      model: 'meta-llama/Llama-3.2-3B-Instruct',
+      inputs: prompt,
       parameters: {
-        max_new_tokens: 150,
+        max_new_tokens: 500,
         temperature: 0.7,
         top_p: 0.95,
-        repetition_penalty: 1.2,
+        repetition_penalty: 1.15,
+        do_sample: true,
       },
     })
 
-    const aiResponse = response.generated_text.split('AI:')[1].trim()
+    const delimiters = ['[/INST]]', '[/INST]']
+    let aiResponse = ''
+
+    for (const delimiter of delimiters) {
+      const parts = response.generated_text.split(delimiter)
+      if (parts.length > 1) {
+        aiResponse = parts[1].trim()
+        break
+      }
+    }
+
+    if (!aiResponse) {
+      aiResponse = "I apologize, but I couldn't generate a response. Please try rephrasing your question."
+    }
+
+    // Add a reminder about FideLearn and Kirubel if it's not already mentioned
+    if (!aiResponse.toLowerCase().includes('')) {
+      aiResponse += " (Created by FideLearn, developed by Kirubel B.)"
+    }
+
     return NextResponse.json({ response: aiResponse })
   } catch (error) {
     console.error('Error:', error)
-    return NextResponse.json({ error: 'Failed to generate response' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to generate response'}, { status: 500 })
   }
 }

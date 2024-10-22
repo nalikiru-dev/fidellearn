@@ -1,26 +1,348 @@
-import { SignUp } from "@clerk/nextjs";
-import Link from 'next/link';
-
-export default function Page() {
-  return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-r from-purple-500 to-indigo-600">
-      <SignUp 
-        appearance={{
-          elements: {
-            formButtonPrimary: 'bg-indigo-500 hover:bg-indigo-600 text-sm normal-case',
-          },
-        }}
-        path="/sign-up"
-        routing="path"
-        signInUrl="/sign-in"
-        redirectUrl="/"
-      />
-      <p className="mt-4 text-white">
-        Already have an account?{' '}
-        <Link href="/sign-in" className="text-indigo-200 hover:text-indigo-100 underline">
-          Sign in
-        </Link>
-      </p>
-    </div>
-  );
-}
+'use client';
+
+
+
+import { useState } from 'react';
+
+import { useSignUp } from '@clerk/nextjs';
+
+import { useRouter } from 'next/navigation';
+
+import { Button } from '@/components/ui/button';
+
+import { Input } from '@/components/ui/input';
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+import { useToast } from '@/hooks/use-toast';
+
+import { Toast } from '@/components/ui/toast';
+
+
+
+type UserRole = 'student' | 'teacher' | 'staff' | 'manager';
+
+
+
+const SignUpPage = () => {
+
+  const [email, setEmail] = useState('');
+
+  const [username, setUsername] = useState('');
+
+  const [password, setPassword] = useState('');
+
+  const [role, setRole] = useState<UserRole>('student');
+
+  const [firstName, setFirstName] = useState('');
+
+  const [lastName, setLastName] = useState('');
+
+  const [loading, setLoading] = useState(false);
+
+  const [pendingVerification, setPendingVerification] = useState(false);
+
+  const [code, setCode] = useState('');
+
+  
+
+  const { isLoaded, signUp, setActive } = useSignUp();
+
+  const router = useRouter();
+
+  const { toast, showToast, dismissToast } = useToast();
+
+
+
+  if (!isLoaded) {
+
+    return null;
+
+  }
+
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+
+    e.preventDefault();
+
+    setLoading(true);
+
+
+
+    try {
+
+      await signUp.create({
+
+        emailAddress: email,
+
+        username,
+
+        password,
+
+        firstName,
+
+        lastName,
+
+      });
+
+
+
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+
+
+
+      setPendingVerification(true);
+
+      showToast({
+
+        title: "Verification email sent",
+
+        description: "Please check your email for the verification code.",
+
+        type: "info",
+
+      });
+
+    } catch (err: any) {
+
+      console.error('Error during sign up:', JSON.stringify(err, null, 2));
+
+      showToast({
+
+        title: "Sign up failed",
+
+        description: err.errors?.[0]?.message || "An unexpected error occurred",
+
+        type: "error",
+
+      });
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+
+
+  const handleVerification = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+
+      if (completeSignUp.status !== "complete") {
+        throw new Error("Unable to complete sign up");
+      }
+
+      await setActive({ session: completeSignUp.createdSessionId });
+
+      if (completeSignUp.createdUserId) {
+        const user = await fetch(`/api/users/${completeSignUp.createdUserId}`).then(res => res.json());
+        await user.update({
+          unsafeMetadata: {
+            role: role,
+          },
+        });
+      } else {
+        throw new Error("User ID not found after sign up");
+      }
+
+      showToast({
+        title: "Account created successfully!",
+        description: "Welcome aboard! You can now start using our platform.",
+        type: "success",
+      });
+
+      router.push(`/dashboard/${role}`);
+    } catch (err: any) {
+      console.error('Error during verification:', JSON.stringify(err, null, 2));
+      showToast({
+        title: "Verification failed",
+        description: err.message || "An unexpected error occurred",
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+  return (
+
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+
+      <div className="p-8 bg-white rounded-lg shadow-md w-full max-w-md">
+
+        <h2 className="text-3xl font-bold mb-6 text-center">Create Your Account</h2>
+
+        {!pendingVerification ? (
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            <Input
+
+              type="email"
+
+              placeholder="Email"
+
+              value={email}
+
+              onChange={(e) => setEmail(e.target.value)}
+
+              required
+
+            />
+
+            <Input
+
+              type="text"
+
+              placeholder="Username"
+
+              value={username}
+
+              onChange={(e) => setUsername(e.target.value)}
+
+              required
+
+            />
+
+            <Input
+
+              type="password"
+
+              placeholder="Password"
+
+              value={password}
+
+              onChange={(e) => setPassword(e.target.value)}
+
+              required
+
+            />
+
+            <Input
+
+              type="text"
+
+              placeholder="First Name"
+
+              value={firstName}
+
+              onChange={(e) => setFirstName(e.target.value)}
+
+              required
+
+            />
+
+            <Input
+
+              type="text"
+
+              placeholder="Last Name"
+
+              value={lastName}
+
+              onChange={(e) => setLastName(e.target.value)}
+
+              required
+
+            />
+
+            <Select onValueChange={(value: UserRole) => setRole(value)} value={role}>
+
+              <SelectTrigger className="w-full">
+
+                <SelectValue placeholder="Select your role" />
+
+              </SelectTrigger>
+
+              <SelectContent>
+
+                <SelectItem value="student">Student</SelectItem>
+
+                <SelectItem value="teacher">Teacher</SelectItem>
+
+                <SelectItem value="staff">Staff</SelectItem>
+
+                <SelectItem value="manager">Manager</SelectItem>
+
+              </SelectContent>
+
+            </Select>
+
+            <Button type="submit" className="w-full" disabled={loading}>
+
+              {loading ? 'Signing up...' : 'Sign Up'}
+
+            </Button>
+
+          </form>
+
+        ) : (
+
+          <form onSubmit={handleVerification} className="space-y-4">
+
+            <Input
+
+              type="text"
+
+              placeholder="Verification Code"
+
+              value={code}
+
+              onChange={(e) => setCode(e.target.value)}
+
+              required
+
+            />
+
+            <Button type="submit" className="w-full" disabled={loading}>
+
+              {loading ? 'Verifying...' : 'Verify Email'}
+
+            </Button>
+
+          </form>
+
+        )}
+
+      </div>
+
+      {toast && (
+
+        <Toast
+
+          title={toast.title}
+
+          description={toast.description}
+
+          type={toast.type as 'success' | 'error' | 'info'}
+
+          onClose={dismissToast}
+
+        />
+
+      )}
+
+    </div>
+
+  );
+
+};
+
+
+
+export default SignUpPage;
+
+
+
+

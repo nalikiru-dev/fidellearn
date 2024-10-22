@@ -26,7 +26,7 @@ const subjects = [
   'Amharic',
 ]
 
-export function Chat() {
+const AppChatPage = () => {
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: "Hello! I'm your FideLearn AI tutor, designed to help Ethiopian high school students. Which subject would you like to study today?" }
   ])
@@ -46,7 +46,7 @@ export function Chat() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!input.trim() || isLoading) return
+    if (!input.trim() || isLoading || !subject) return
   
     const userMessage: Message = { role: 'user', content: input }
     setMessages((prev) => [...prev, userMessage])
@@ -91,19 +91,7 @@ export function Chat() {
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-r from-purple-500 to-indigo-600">
-      <header className="bg-white text-gray-800 py-4 shadow-md">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-          <h1 className="text-2xl font-bold text-purple-600 mb-4 md:mb-0">FideLearn AI Tutor</h1>
-          <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
-            <span className="text-gray-600">Welcome, {user?.firstName || 'User'}!</span>
-            <Link href="/profile">
-              <Button variant="outline" className="w-full md:w-auto">Profile</Button>
-            </Link>
-            <UserButton afterSignOutUrl="/sign-in" />
-            <Button variant="destructive" onClick={handleSignOut} className="w-full md:w-auto">Sign Out</Button>
-          </div>
-        </div>
-      </header>
+
       <main className="flex-grow container mx-auto px-4 py-8 flex flex-col max-w-5xl">
         <div className="mb-4">
           <Select onValueChange={setSubject} value={subject}>
@@ -162,3 +150,4 @@ export function Chat() {
     </div>
   )
 }
+export default AppChatPage;

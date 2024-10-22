@@ -1,24 +1,28 @@
 'use client'
 
 import { useUser } from '@clerk/nextjs'
-import { Chat } from '@/components/app-chat-page'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import LandingPage from './landing-page'
+import StudentDashboard from '@/components/Dashboard/Student/StudentDashboard'
+import TeacherDashboard from '@/components/Dashboard/Teacher/TeacherDashboard'
+import StaffDashboard from '@/components/Dashboard/Staff/StaffDashboard'
+import ManagerDashboard from '@/components/Dashboard/Manager/ManagerDashboard'
 
 export default function Home() {
-  const { isSignedIn, isLoaded } = useUser()
+  const { isSignedIn, isLoaded, user } = useUser()
   const router = useRouter()
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
     if (isLoaded) {
       setIsReady(true)
-      if (!isSignedIn) {
-        router.push('/')
+      if (isSignedIn) {
+        const role = user?.publicMetadata.role as string
+        router.push(`/dashboard/${role}`)
       }
     }
-  }, [isSignedIn, isLoaded, router])
+  }, [isSignedIn, isLoaded, router, user])
 
   if (!isReady || !isLoaded) {
     return (
@@ -32,9 +36,18 @@ export default function Home() {
     return <LandingPage />
   }
 
-  return (
-    <main>
-      <Chat />
-    </main>
-  )
+  const role = user?.publicMetadata.role as string
+
+  switch (role) {
+    case 'student':
+      return <StudentDashboard />
+    case 'teacher':
+      return <TeacherDashboard />
+    case 'staff':
+      return <StaffDashboard />
+    case 'manager':
+      return <ManagerDashboard />
+    default:
+      return <LandingPage />
+  }
 }
