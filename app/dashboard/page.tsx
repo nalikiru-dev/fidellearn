@@ -38,15 +38,15 @@ export default function DashboardPage() {
 
 
 
+  if (!isLoaded || !isSignedIn) {
+
+    return <div>Loading...</div>
+
+  }
+
+
+
   try {
-    if (!isLoaded || !isSignedIn) {
-
-      return null
-
-    }
-
-
-
     const role = user?.publicMetadata.role as string
 
 
@@ -76,7 +76,7 @@ export default function DashboardPage() {
     }
 
   } catch (error) {
-    console.error('Error initializing Sanity client:', error)
+    console.error('Error loading dashboard:', error)
     return <div>Error loading dashboard. Please try again later.</div>
   }
 
