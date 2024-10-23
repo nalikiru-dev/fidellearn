@@ -30,7 +30,55 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useState } from 'react';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -62,7 +110,39 @@ import { useSignUp } from '@clerk/nextjs';
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useRouter } from 'next/navigation';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -94,7 +174,39 @@ import { Button } from '@/components/ui/button';
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { Input } from '@/components/ui/input';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -126,6 +238,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useToast } from '@/hooks/use-toast';
 
 
@@ -142,7 +270,55 @@ import { useToast } from '@/hooks/use-toast';
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { Toast } from '@/components/ui/toast';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -206,7 +382,55 @@ type UserRole = 'student' | 'teacher' | 'staff' | 'manager';
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const SignUpPage = () => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -238,7 +462,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [username, setUsername] = useState('');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -270,7 +526,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [role, setRole] = useState<UserRole>('student');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -302,7 +590,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [lastName, setLastName] = useState('');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -334,7 +654,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [pendingVerification, setPendingVerification] = useState(false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -366,7 +718,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -398,7 +782,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const router = useRouter();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -446,6 +862,38 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   if (!isLoaded) {
 
 
@@ -462,7 +910,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -510,6 +990,38 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleSubmit = async (e: React.FormEvent) => {
 
 
@@ -526,7 +1038,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     e.preventDefault();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -574,7 +1118,55 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     try {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -606,7 +1198,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         emailAddress: email,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -638,7 +1262,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         password,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -670,6 +1326,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         lastName,
 
 
@@ -686,7 +1358,55 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -734,6 +1454,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       setPendingVerification(true);
 
 
@@ -750,7 +1486,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       showToast({
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -782,7 +1550,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         description: "Please check your email for the verification code.",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -814,7 +1614,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -846,7 +1678,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       console.error('Error during sign up:', err);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -878,7 +1742,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         title: "Sign up failed",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -910,7 +1806,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         type: "error",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -942,7 +1870,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     } finally {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -974,6 +1934,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -990,7 +1966,55 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1040,7 +2064,7 @@ const SignUpPage = () => {
       await setActive({ session: completeSignUp.createdSessionId });
 
       // Update user role
-      const response = await fetch('/api/updateUserProfile', {
+      const response = await fetch('/api/updateUserRole', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1051,8 +2075,8 @@ const SignUpPage = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        console.error('Error updating user profile:', data);
-        throw new Error(`Failed to update user profile: ${data.error}`);
+        console.error('Error updating user role:', data);
+        throw new Error(`Failed to update user role: ${data.error}`);
       }
 
       showToast({
@@ -1104,7 +2128,55 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1136,7 +2208,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <div className="p-8 bg-white rounded-lg shadow-md w-full max-w-md">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1168,7 +2272,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         {!pendingVerification ? (
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1200,7 +2336,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <Input
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1232,7 +2400,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               placeholder="Email"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1264,7 +2464,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               onChange={(e) => setEmail(e.target.value)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1296,7 +2528,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1328,7 +2592,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               type="text"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1360,7 +2656,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               value={username}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1392,7 +2720,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               required
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1424,7 +2784,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <Input
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1456,7 +2848,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               placeholder="Password"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1488,7 +2912,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               onChange={(e) => setPassword(e.target.value)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1520,7 +2976,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1552,7 +3040,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               type="text"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1584,7 +3104,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               value={firstName}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1616,7 +3168,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               required
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1648,6 +3232,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <Input
 
 
@@ -1664,7 +3264,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               type="text"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1696,7 +3328,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               value={lastName}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1728,6 +3392,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               required
 
 
@@ -1744,7 +3424,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1776,7 +3488,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               <SelectTrigger className="w-full">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1808,7 +3552,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               </SelectTrigger>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1840,7 +3616,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <SelectItem value="student">Student</SelectItem>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1872,7 +3680,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <SelectItem value="staff">Staff</SelectItem>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1904,7 +3744,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               </SelectContent>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1936,7 +3808,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <Button type="submit" className="w-full" disabled={loading}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1968,6 +3872,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </Button>
 
 
@@ -1984,7 +3904,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2016,7 +3968,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           <form onSubmit={handleVerification} className="space-y-4">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2048,7 +4032,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               type="text"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2080,7 +4096,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               value={code}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2112,7 +4160,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               required
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2144,7 +4224,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <Button type="submit" className="w-full" disabled={loading}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2176,7 +4288,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </Button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2208,7 +4352,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2240,7 +4416,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       {toast && (
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2272,7 +4480,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           title={toast.title}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2304,7 +4544,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           type={toast.type as 'success' | 'error' | 'info'}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2336,7 +4608,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2368,6 +4672,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 
 
@@ -2384,7 +4704,39 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2432,7 +4784,79 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default SignUpPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
