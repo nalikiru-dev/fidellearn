@@ -1,85 +1,28 @@
-'use client'
+'use client';
 
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { getDashboardRoute } from '@/lib/utils';
 
-
-import { useUser } from '@clerk/nextjs'
-
-import { useRouter } from 'next/navigation'
-
-import { useEffect } from 'react'
-
-import StudentDashboard from '@/components/Dashboard/Student/StudentDashboard'
-
-import TeacherDashboard from '@/components/Dashboard/Teacher/TeacherDashboard'
-
-import StaffDashboard from '@/components/Dashboard/Staff/StaffDashboard'
-
-import ManagerDashboard from '@/components/Dashboard/Manager/ManagerDashboard'
-
-
-
-export default function DashboardPage() {
-
-  const { isSignedIn, isLoaded, user } = useUser()
-
-  const router = useRouter()
-
-
+export default function DashboardRedirect() {
+  const { isSignedIn, user, isLoaded } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
-
-    if (isLoaded && !isSignedIn) {
-
-      router.push('/')
-
+    if (isLoaded) {
+      if (isSignedIn && user) {
+        const dashboardRoute = getDashboardRoute(user);
+        router.push(dashboardRoute);
+      } else {
+        router.push('/sign-in');
+      }
     }
+  }, [isSignedIn, isLoaded, user, router]);
 
-  }, [isSignedIn, isLoaded, router])
-
-
-
-  if (!isLoaded || !isSignedIn) {
-
-    return <div>Loading...</div>
-
-  }
-
-
-
-  try {
-    const role = user?.publicMetadata.role as string
-
-
-
-    switch (role) {
-
-      case 'student':
-
-        return <StudentDashboard />
-
-      case 'teacher':
-
-        return <TeacherDashboard />
-
-      case 'staff':
-
-        return <StaffDashboard />
-
-      case 'manager':
-
-        return <ManagerDashboard />
-
-      default:
-
-        return <div>Invalid role</div>
-
-    }
-
-  } catch (error) {
-    console.error('Error loading dashboard:', error)
-    return <div>Error loading dashboard. Please try again later.</div>
-  }
-
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+    </div>
+  );
 }
-
-

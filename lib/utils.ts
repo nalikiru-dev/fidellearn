@@ -1,16 +1,17 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { User } from "@clerk/nextjs/server";
+import { User } from "@clerk/nextjs/dist/types/server"
+import { UserResource } from "@clerk/types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function getDashboardRoute(user: User | null): string {
+export function getDashboardRoute(user: User | UserResource | null): string {
   if (!user) return '/';
 
-  // Assuming the user's role is stored in public metadata
-  const role = user.publicMetadata.role as string | undefined;
+  // Assuming the role is stored in publicMetadata
+  const role = (user.publicMetadata?.role as string) || 'student';
 
   switch (role) {
     case 'student':

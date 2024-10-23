@@ -1,8 +1,10 @@
+'use client';
 import { SignIn, useUser } from "@clerk/nextjs";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getDashboardRoute } from '@/lib/utils';
+import { UserResource } from "@clerk/types";
 
 export default function Page() {
   const { isSignedIn, user, isLoaded } = useUser();
@@ -10,7 +12,7 @@ export default function Page() {
   const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
-    if (isLoaded && isSignedIn) {
+    if (isLoaded && isSignedIn && user) {
       setIsRedirecting(true);
       const dashboardRoute = getDashboardRoute(user);
       setTimeout(() => {
@@ -40,7 +42,8 @@ export default function Page() {
         path="/sign-in"
         routing="path"
         signUpUrl="/sign-up"
-        redirectUrl={({ user }) => getDashboardRoute(user)}
+        redirectUrl="/"
+        afterSignInUrl="/dashboard"
       />
       <p className="mt-4 text-white">
         Don&apos;t have an account?{' '}
