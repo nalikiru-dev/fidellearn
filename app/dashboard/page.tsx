@@ -1,28 +1,139 @@
-'use client';
+'use server';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import { useUser } from "@clerk/nextjs";
+
+
+
+
+
+
+
 import { useRouter } from 'next/navigation';
+
+
+
+
+
+
+
 import { useEffect } from 'react';
+
+
+
+
+
+
+
 import { getDashboardRoute } from '@/lib/utils';
 
-export default function DashboardRedirect() {
-  const { isSignedIn, user, isLoaded } = useUser();
-  const router = useRouter();
 
-  useEffect(() => {
-    if (isLoaded) {
-      if (isSignedIn && user) {
-        const dashboardRoute = getDashboardRoute(user);
-        router.push(dashboardRoute);
-      } else {
-        router.push('/sign-in');
-      }
-    }
-  }, [isSignedIn, isLoaded, user, router]);
 
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-    </div>
-  );
+import { getUserRole } from '@/lib/getUserRole';
+
+
+
+import { redirect } from 'next/navigation';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export default async function DashboardPage() {
+
+
+
+  const role = await getUserRole();
+
+
+
+  if (!role) {
+
+
+
+    redirect('/sign-in');
+
+
+
+  }
+
+
+
+  switch (role) {
+
+
+
+    case 'student':
+
+
+
+      redirect('/dashboard/student');
+
+
+
+    case 'teacher':
+
+
+
+      redirect('/dashboard/teacher');
+
+
+
+    case 'staff':
+
+
+
+      redirect('/dashboard/staff');
+
+
+
+    case 'manager':
+
+
+
+      redirect('/dashboard/manager');
+
+
+
+    default:
+
+
+
+      redirect('/dashboard/general');
+
+
+
+  }
+
+
+
 }
+
+
+
+
+
+

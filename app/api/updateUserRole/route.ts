@@ -1,0 +1,84 @@
+import { NextResponse } from 'next/server';
+
+import { clerkClient } from '@clerk/nextjs';
+
+import { auth } from '@clerk/nextjs/server';
+
+
+
+
+
+
+
+export async function POST(request: Request) {
+
+
+
+  try {
+
+
+
+    const { userId } = auth();
+
+    if (!userId) {
+
+      return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+
+    }
+
+
+
+    const { role } = await request.json();
+
+    if (!role) {
+
+      return NextResponse.json({ success: false, error: 'Role is required' }, { status: 400 });
+
+    }
+
+
+
+    await clerkClient.users.updateUser(userId, {
+
+
+
+      publicMetadata: { role },
+
+
+
+    });
+
+
+
+
+
+
+
+    return NextResponse.json({ success: true });
+
+
+
+  } catch (error: any) {
+
+
+
+    console.error('Error updating user role:', error);
+
+
+
+    return NextResponse.json({ success: false, error: error.message || 'Failed to update user role' }, { status: 500 });
+
+
+
+  }
+
+
+
+}
+
+
+
+
+
+
+

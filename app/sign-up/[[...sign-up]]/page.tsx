@@ -14,7 +14,31 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useState } from 'react';
+
+
+
+
+
+
+
+
 
 
 
@@ -30,7 +54,23 @@ import { useSignUp } from '@clerk/nextjs';
 
 
 
+
+
+
+
+
+
+
+
 import { useRouter } from 'next/navigation';
+
+
+
+
+
+
+
+
 
 
 
@@ -46,7 +86,23 @@ import { Button } from '@/components/ui/button';
 
 
 
+
+
+
+
+
+
+
+
 import { Input } from '@/components/ui/input';
+
+
+
+
+
+
+
+
 
 
 
@@ -62,6 +118,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 
 
+
+
+
+
+
+
+
+
 import { useToast } from '@/hooks/use-toast';
 
 
@@ -70,7 +134,31 @@ import { useToast } from '@/hooks/use-toast';
 
 
 
+
+
+
+
+
+
+
+
 import { Toast } from '@/components/ui/toast';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -102,7 +190,31 @@ type UserRole = 'student' | 'teacher' | 'staff' | 'manager';
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const SignUpPage = () => {
+
+
+
+
+
+
+
+
 
 
 
@@ -118,7 +230,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   const [username, setUsername] = useState('');
+
+
+
+
+
+
+
+
 
 
 
@@ -134,7 +262,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   const [role, setRole] = useState<UserRole>('student');
+
+
+
+
+
+
+
+
 
 
 
@@ -150,7 +294,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   const [lastName, setLastName] = useState('');
+
+
+
+
+
+
+
+
 
 
 
@@ -166,7 +326,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   const [pendingVerification, setPendingVerification] = useState(false);
+
+
+
+
+
+
+
+
 
 
 
@@ -182,7 +358,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   
+
+
+
+
+
+
+
+
 
 
 
@@ -198,7 +390,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   const router = useRouter();
+
+
+
+
+
+
+
+
 
 
 
@@ -222,6 +430,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   if (!isLoaded) {
 
 
@@ -230,7 +454,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
     return null;
+
+
+
+
+
+
+
+
 
 
 
@@ -254,6 +494,22 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleSubmit = async (e: React.FormEvent) => {
 
 
@@ -262,7 +518,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
     e.preventDefault();
+
+
+
+
+
+
+
+
 
 
 
@@ -286,7 +558,31 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     try {
+
+
+
+
+
+
+
+
 
 
 
@@ -302,7 +598,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
         emailAddress: email,
+
+
+
+
+
+
+
+
 
 
 
@@ -318,7 +630,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
         password,
+
+
+
+
+
+
+
+
 
 
 
@@ -334,6 +662,14 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
         lastName,
 
 
@@ -342,7 +678,31 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
       });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -382,7 +742,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
       showToast({
+
+
+
+
+
+
+
+
 
 
 
@@ -398,7 +774,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
         description: "Please check your email for the verification code.",
+
+
+
+
+
+
+
+
 
 
 
@@ -414,6 +806,14 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
       });
 
 
@@ -422,23 +822,135 @@ const SignUpPage = () => {
 
 
 
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error('Error during sign up:', err.message);
-        showToast({
-          title: "Sign up failed",
-          description: err.message || "An unexpected error occurred",
-          type: "error",
-        });
-      } else {
-        console.error('Unknown error during sign up:', err);
-        showToast({
-          title: "Sign up failed",
-          description: "An unexpected error occurred",
-          type: "error",
-        });
-      }
+
+
+
+
+
+
+
+
+    } catch (err: any) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      console.error('Error during sign up:', err);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      showToast({
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        title: "Sign up failed",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        description: err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "An unexpected error occurred",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        type: "error",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     } finally {
+
+
+
+
+
+
+
+
 
 
 
@@ -454,6 +966,14 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
     }
 
 
@@ -462,7 +982,31 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -479,164 +1023,72 @@ const SignUpPage = () => {
 
 
   const handleVerification = async (e: React.FormEvent) => {
-
-
-
     e.preventDefault();
-
-
-
     setLoading(true);
 
-
-
-
-
-
-
     try {
-
-
-
       const completeSignUp = await signUp.attemptEmailAddressVerification({
-
-
-
         code,
-
-
-
       });
 
-
-
-
-
-
+      console.log('Sign up status:', completeSignUp.status);
 
       if (completeSignUp.status !== "complete") {
-
-
-
-        throw new Error("Unable to complete sign up");
-
-
-
+        throw new Error(`Unable to complete sign up. Status: ${completeSignUp.status}`);
       }
-
-
-
-
-
-
 
       await setActive({ session: completeSignUp.createdSessionId });
 
-
-
-
-
-
-
-      if (completeSignUp.createdUserId) {
-
-
-
-        const user = await fetch(`/api/users/${completeSignUp.createdUserId}`).then(res => res.json());
-
-
-
-        await user.update({
-
-
-
-          unsafeMetadata: {
-
-
-
-            role: role,
-
-
-
-          },
-
-
-
-        });
-
-
-
-      } else {
-
-
-
-        throw new Error("User ID not found after sign up");
-
-
-
-      }
-
-
-
-
-
-
-
-      showToast({
-
-
-
-        title: "Account created successfully!",
-
-
-
-        description: "Welcome aboard! You can now start using our platform.",
-
-
-
-        type: "success",
-
-
-
+      // Update user role
+      const response = await fetch('/api/updateUserProfile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ role }),
       });
 
+      const data = await response.json();
 
-
-
-
-
-
-      router.push(`/dashboard/${role}`);
-
-
-
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error('Error during verification:', err.message);
-        showToast({
-          title: "Verification failed",
-          description: err.message || "An unexpected error occurred",
-          type: "error",
-        });
-      } else {
-        console.error('Unknown error during verification:', err);
-        showToast({
-          title: "Verification failed",
-          description: "An unexpected error occurred",
-          type: "error",
-        });
+      if (!response.ok) {
+        console.error('Error updating user profile:', data);
+        throw new Error(`Failed to update user profile: ${data.error}`);
       }
+
+      showToast({
+        title: "Account created successfully!",
+        description: "Welcome aboard! You can now start using our platform.",
+        type: "success",
+      });
+
+      router.push('/dashboard');
+    } catch (err: any) {
+      console.error('Error during verification:', err);
+      showToast({
+        title: "Verification failed",
+        description: err.message || err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "An unexpected error occurred",
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
-
-
-
-
-
-
-
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -660,7 +1112,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+
+
+
+
+
+
+
+
 
 
 
@@ -676,7 +1144,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
         <h2 className="text-3xl font-bold mb-6 text-center">Create Your Account</h2>
+
+
+
+
+
+
+
+
 
 
 
@@ -692,6 +1176,14 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
           <form onSubmit={handleSubmit} className="space-y-4">
 
 
@@ -700,7 +1192,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             <Input
+
+
+
+
+
+
+
+
 
 
 
@@ -716,7 +1224,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               placeholder="Email"
+
+
+
+
+
+
+
+
 
 
 
@@ -732,7 +1256,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               onChange={(e) => setEmail(e.target.value)}
+
+
+
+
+
+
+
+
 
 
 
@@ -748,7 +1288,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             />
+
+
+
+
+
+
+
+
 
 
 
@@ -764,7 +1320,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               type="text"
+
+
+
+
+
+
+
+
 
 
 
@@ -780,7 +1352,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               value={username}
+
+
+
+
+
+
+
+
 
 
 
@@ -796,7 +1384,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               required
+
+
+
+
+
+
+
+
 
 
 
@@ -812,7 +1416,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             <Input
+
+
+
+
+
+
+
+
 
 
 
@@ -828,7 +1448,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               placeholder="Password"
+
+
+
+
+
+
+
+
 
 
 
@@ -844,7 +1480,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               onChange={(e) => setPassword(e.target.value)}
+
+
+
+
+
+
+
+
 
 
 
@@ -860,7 +1512,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             />
+
+
+
+
+
+
+
+
 
 
 
@@ -876,7 +1544,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               type="text"
+
+
+
+
+
+
+
+
 
 
 
@@ -892,7 +1576,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               value={firstName}
+
+
+
+
+
+
+
+
 
 
 
@@ -908,7 +1608,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               required
+
+
+
+
+
+
+
+
 
 
 
@@ -924,6 +1640,14 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             <Input
 
 
@@ -932,7 +1656,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               type="text"
+
+
+
+
+
+
+
+
 
 
 
@@ -948,7 +1688,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               value={lastName}
+
+
+
+
+
+
+
+
 
 
 
@@ -964,6 +1720,14 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               required
 
 
@@ -972,7 +1736,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             />
+
+
+
+
+
+
+
+
 
 
 
@@ -988,7 +1768,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               <SelectTrigger className="w-full">
+
+
+
+
+
+
+
+
 
 
 
@@ -1004,7 +1800,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               </SelectTrigger>
+
+
+
+
+
+
+
+
 
 
 
@@ -1020,7 +1832,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
                 <SelectItem value="student">Student</SelectItem>
+
+
+
+
+
+
+
+
 
 
 
@@ -1036,7 +1864,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
                 <SelectItem value="staff">Staff</SelectItem>
+
+
+
+
+
+
+
+
 
 
 
@@ -1052,7 +1896,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               </SelectContent>
+
+
+
+
+
+
+
+
 
 
 
@@ -1068,7 +1928,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             <Button type="submit" className="w-full" disabled={loading}>
+
+
+
+
+
+
+
+
 
 
 
@@ -1084,6 +1960,14 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             </Button>
 
 
@@ -1092,7 +1976,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
           </form>
+
+
+
+
+
+
+
+
 
 
 
@@ -1108,7 +2008,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
           <form onSubmit={handleVerification} className="space-y-4">
+
+
+
+
+
+
+
+
 
 
 
@@ -1124,7 +2040,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               type="text"
+
+
+
+
+
+
+
+
 
 
 
@@ -1140,7 +2072,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               value={code}
+
+
+
+
+
+
+
+
 
 
 
@@ -1156,7 +2104,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
               required
+
+
+
+
+
+
+
+
 
 
 
@@ -1172,7 +2136,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             <Button type="submit" className="w-full" disabled={loading}>
+
+
+
+
+
+
+
+
 
 
 
@@ -1188,7 +2168,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
             </Button>
+
+
+
+
+
+
+
+
 
 
 
@@ -1204,7 +2200,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
         )}
+
+
+
+
+
+
+
+
 
 
 
@@ -1220,7 +2232,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
       {toast && (
+
+
+
+
+
+
+
+
 
 
 
@@ -1236,7 +2264,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
           title={toast.title}
+
+
+
+
+
+
+
+
 
 
 
@@ -1252,7 +2296,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
           type={toast.type as 'success' | 'error' | 'info'}
+
+
+
+
+
+
+
+
 
 
 
@@ -1268,7 +2328,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
         />
+
+
+
+
+
+
+
+
 
 
 
@@ -1284,6 +2360,14 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
     </div>
 
 
@@ -1292,7 +2376,23 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   );
+
+
+
+
+
+
+
+
 
 
 
@@ -1316,7 +2416,43 @@ const SignUpPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default SignUpPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
