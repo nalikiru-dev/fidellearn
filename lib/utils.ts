@@ -24,3 +24,17 @@ export function getDashboardRoute(user: User | UserResource | null): string {
       return '/dashboard'; // Default dashboard route
   }
 }
+
+// Add these functions to your existing utils.ts file
+
+export function getTotalLessons(modules: Module[]): number {
+  return modules.reduce((total, module) => total + module.lessons.length, 0);
+}
+
+export function getTotalResources(modules: Module[]): number {
+  return modules.reduce((total, module) => {
+    return total + module.lessons.reduce((lessonTotal, lesson) => {
+      return lessonTotal + lesson.resources.length;
+    }, 0);
+  }, 0);
+}
