@@ -9,8 +9,8 @@ if (!projectId) {
 }
 
 export const client = createClient({
-  projectId,
-  dataset,
+  projectId: 'clhnuvhg',
+  dataset: 'production',
   useCdn: process.env.NODE_ENV === 'production',
   apiVersion: '2023-05-03', // Use the latest API version
 });

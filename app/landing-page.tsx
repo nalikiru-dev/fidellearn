@@ -8,185 +8,90 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { Menu, X, CheckCircle, Users, BookOpen, TrendingUp, Globe, Zap, ChevronDown } from 'lucide-react';
 
+import { FAQSection } from '@/components/Landing/FAQSection';
 
+import { MobileMenu } from '@/components/Landing/MobileMenu';
 
+import { QuoteSection } from '@/components/Landing/QuoteSection';
 
+import { CTAButton } from '@/components/Landing/CTAButton';
 
 
 
+interface Feature {
 
 
 
+  title: string;
 
-const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
 
 
+  icon: JSX.Element;
 
-  const [isOpen, setIsOpen] = useState(false);
 
 
+  description: string;
 
 
 
+  color: string;
 
 
-  return (
 
+}
 
 
-    <motion.div
 
 
 
-      className="border-b border-purple-300 last:border-b-0"
 
 
+interface Testimonial {
 
-      initial={false}
 
 
+  name: string;
 
-      animate={{ backgroundColor: isOpen ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0)" }}
 
 
+  role: string;
 
-      transition={{ duration: 0.3 }}
 
 
+  quote: string;
 
-    >
 
 
+  image: string;
 
-      <motion.button
 
 
+}
 
-        className="flex justify-between items-center w-full py-4 px-6 text-left"
 
 
 
-        onClick={() => setIsOpen(!isOpen)}
 
 
 
-      >
+interface Stat {
 
 
 
-        <span className="text-lg font-semibold">{question}</span>
+  number: string;
 
 
 
-        <motion.div
+  label: string;
 
 
 
-          animate={{ rotate: isOpen ? 180 : 0 }}
+  color: string;
 
 
 
-          transition={{ duration: 0.3 }}
+}
 
-
-
-        >
-
-
-
-          <ChevronDown className="w-6 h-6" />
-
-
-
-        </motion.div>
-
-
-
-      </motion.button>
-
-
-
-      <AnimatePresence initial={false}>
-
-
-
-        {isOpen && (
-
-
-
-          <motion.div
-
-
-
-            initial="collapsed"
-
-
-
-            animate="open"
-
-
-
-            exit="collapsed"
-
-
-
-            variants={{
-
-
-
-              open: { opacity: 1, height: "auto" },
-
-
-
-              collapsed: { opacity: 0, height: 0 }
-
-
-
-            }}
-
-
-
-            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-
-
-
-          >
-
-
-
-            <div className="px-6 pb-4 text-purple-100">
-
-
-
-              {answer}
-
-
-
-            </div>
-
-
-
-          </motion.div>
-
-
-
-        )}
-
-
-
-      </AnimatePresence>
-
-
-
-    </motion.div>
-
-
-
-  );
-
-
-
-};
 
 
 
@@ -206,6 +111,8 @@ const LandingPage = () => {
       setScrolled(window.scrollY > 20);
 
     };
+
+
 
 
 
@@ -229,6 +136,8 @@ const LandingPage = () => {
 
 
 
+
+
   const staggerChildren = {
 
     animate: {
@@ -239,9 +148,15 @@ const LandingPage = () => {
 
       }
 
+
+
     }
 
+
+
   };
+
+
 
 
 
@@ -263,11 +178,315 @@ const LandingPage = () => {
 
 
 
+
+
+
+
+  const features: Feature[] = [
+
+
+
+    {
+
+
+
+      title: "AI-Powered Learning",
+
+
+
+      icon: <Zap className="text-blue-600" />,
+
+
+
+      color: "bg-blue-50/80",
+
+
+
+      description: "Adaptive learning algorithms tailor content to each student's needs"
+
+
+
+    },
+
+
+
+    {
+
+
+
+      title: "Comprehensive Curriculum",
+
+
+
+      icon: <BookOpen className="text-indigo-600" />,
+
+
+
+      color: "bg-indigo-50/80",
+
+
+
+      description: "Complete coverage of Ethiopian grade 12 syllabus"
+
+
+
+    },
+
+
+
+    {
+
+
+
+      title: "Real-time Analytics",
+
+
+
+      icon: <TrendingUp className="text-purple-600" />,
+
+
+
+      color: "bg-purple-50/80",
+
+
+
+      description: "Track progress and identify areas for improvement instantly"
+
+
+
+    },
+
+
+
+    {
+
+
+
+      title: "Multilingual Support",
+
+
+
+      icon: <Globe className="text-emerald-600" />,
+
+
+
+      color: "bg-emerald-50/80",
+
+
+
+      description: "Content available in Amharic and English"
+
+
+
+    },
+
+
+
+    {
+
+
+
+      title: "Offline Access",
+
+
+
+      icon: <CheckCircle className="text-cyan-600" />,
+
+
+
+      color: "bg-cyan-50/80",
+
+
+
+      description: "Study materials accessible without internet connection"
+
+
+
+    },
+
+
+
+    {
+
+
+
+      title: "Collaborative Learning",
+
+
+
+      icon: <Users className="text-violet-600" />,
+
+
+
+      color: "bg-violet-50/80",
+
+
+
+      description: "Connect with peers and teachers for group study sessions"
+
+
+
+    }
+
+
+
+  ];
+
+
+
+
+
+
+
+  const stats: Stat[] = [
+
+
+
+    {
+
+
+
+      number: "100,000+",
+
+
+
+      label: "Students Empowered",
+
+
+
+      color: "bg-gradient-to-br from-blue-50 to-blue-100/50"
+
+
+
+    },
+
+
+
+    {
+
+
+
+      number: "35%",
+
+
+
+      label: "Average Grade Improvement",
+
+
+
+      color: "bg-gradient-to-br from-indigo-50 to-indigo-100/50"
+
+
+
+    },
+
+
+
+    {
+
+
+
+      number: "500+",
+
+
+
+      label: "Partner Schools",
+
+
+
+      color: "bg-gradient-to-br from-purple-50 to-purple-100/50"
+
+
+
+    }
+
+
+
+  ];
+
+
+
+
+
+
+
+  const testimonials: Testimonial[] = [
+
+
+
+    {
+
+
+
+      name: "Abebe Kebede",
+
+
+
+      role: "Student",
+
+
+
+      quote: "FideLearn transformed my study habits. I went from struggling to excelling in my exams!",
+
+
+
+      image: "https://i.pravatar.cc/150?img=11"
+
+
+
+    },
+
+
+
+    {
+
+
+
+      name: "Tigist Haile",
+
+
+
+      role: "Teacher",
+
+
+
+      quote: "As a teacher, FideLearn has given me powerful tools to engage my students and track their progress effectively.",
+
+
+
+      image: "https://i.pravatar.cc/150?img=5"
+
+
+
+    }
+
+
+
+  ];
+
+
+
+
+
   return (
 
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-indigo-800 text-white">
+    <div className="min-h-screen bg-white">
 
-      <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-purple-900 bg-opacity-90 shadow-lg' : 'bg-transparent'}`}>
+
+
+      <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+
+        scrolled 
+
+          ? 'bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm' 
+
+
+
+          : 'bg-transparent'
+
+      }`}>
+
+
 
         <div className="container mx-auto px-4 py-4 md:py-6 flex justify-between items-center">
 
@@ -283,9 +502,15 @@ const LandingPage = () => {
 
           >
 
-            <img src="https://placehold.co/40x40?text=FL" alt="FideLearn Logo" width={40} height={40} />
 
-            <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+
+            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+
+              <span className="text-white font-bold text-xl">F</span>
+
+            </div>
+
+            <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
 
               FideLearn
 
@@ -293,7 +518,7 @@ const LandingPage = () => {
 
           </motion.div>
 
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-8">
 
             {navItems.map((item, index) => (
 
@@ -303,7 +528,7 @@ const LandingPage = () => {
 
                 href={item.href}
 
-                className="text-white hover:text-purple-200 transition-colors duration-200 text-sm font-medium"
+                className="text-gray-600 hover:text-blue-600 transition-colors duration-200 text-sm font-medium"
 
                 whileHover={{ scale: 1.05 }}
 
@@ -311,23 +536,21 @@ const LandingPage = () => {
 
               >
 
+
+
                 {item.name}
 
               </motion.a>
 
             ))}
 
-            <motion.div
 
-              whileHover={{ scale: 1.05 }}
 
-              whileTap={{ scale: 0.95 }}
-
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
 
               <Link href="/sign-in">
 
-                <Button variant="outline" className="text-red-500 border-white hover:bg-white hover:text-purple-600">
+                <Button className="bg-blue-600 text-white hover:bg-blue-700 transition-colors">
 
                   Sign In
 
@@ -351,6 +574,8 @@ const LandingPage = () => {
 
           >
 
+
+
             <Menu size={24} />
 
           </motion.button>
@@ -361,93 +586,25 @@ const LandingPage = () => {
 
 
 
-      <AnimatePresence>
+      <MobileMenu 
 
-        {isMenuOpen && (
+        isOpen={isMenuOpen} 
 
-          <motion.div
+        onClose={() => setIsMenuOpen(false)} 
 
-            initial={{ x: '100%' }}
+        navItems={navItems} 
 
-            animate={{ x: 0 }}
-
-            exit={{ x: '100%' }}
-
-            transition={{ type: 'tween', duration: 0.3 }}
-
-            className="fixed top-0 right-0 h-full w-full md:w-80 bg-purple-900 bg-opacity-95 z-50 p-6"
-
-          >
-
-            <motion.button
-
-              className="absolute top-6 right-6 text-white"
-
-              onClick={() => setIsMenuOpen(false)}
-
-              whileHover={{ scale: 1.1 }}
-
-              whileTap={{ scale: 0.9 }}
-
-            >
-
-              <X size={24} />
-
-            </motion.button>
-
-            <nav className="flex flex-col space-y-6 mt-16">
-
-              {navItems.map((item, index) => (
-
-                <motion.a
-
-                  key={index}
-
-                  href={item.href}
-
-                  className="text-white hover:text-purple-200 transition-colors duration-200 text-lg font-medium"
-
-                  whileHover={{ scale: 1.05 }}
-
-                  whileTap={{ scale: 0.95 }}
-
-                  onClick={() => setIsMenuOpen(false)}
-
-                >
-
-                  {item.name}
-
-                </motion.a>
-
-              ))}
-
-              <Link href="/sign-in">
-
-                <Button variant="outline" className="text-white border-white hover:bg-white hover:text-purple-600 w-full">
-
-                  Sign In
-
-                </Button>
-
-              </Link>
-
-            </nav>
-
-          </motion.div>
-
-        )}
-
-      </AnimatePresence>
+      />
 
 
 
-      <main className="container mx-auto px-4 py-10 md:py-20 pt-20 md:pt-28">
+      <main className="container mx-auto px-4 py-10 md:py-20 pt-32">
 
         <motion.section 
 
           id="home"
 
-          className="text-center mb-16 md:mb-20"
+          className="relative"
 
           initial="initial"
 
@@ -457,209 +614,127 @@ const LandingPage = () => {
 
         >
 
-          <motion.h2 
 
-            className="text-3xl md:text-5xl font-extrabold mb-6 md:mb-8 leading-tight"
 
-            variants={fadeIn}
+          <div className="absolute inset-0 -z-10">
 
-          >
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
 
-            Revolutionizing Ethiopian Education
 
-          </motion.h2>
 
-          <motion.p 
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-50 via-white to-white" />
 
-            className="text-lg md:text-xl mb-8 md:mb-12 max-w-3xl mx-auto"
 
-            variants={fadeIn}
-
-          >
-
-            FideLearn is dedicated to transforming the educational landscape for Ethiopian grade 12 students. 
-
-            We're addressing the critical need to improve national exam pass rates and empower both students and teachers.
-
-          </motion.p>
-
-          <motion.div 
-
-            className="bg-white text-purple-800 p-4 md:p-6 rounded-lg mb-8 md:mb-12 max-w-2xl mx-auto"
-
-            variants={fadeIn}
-
-          >
-
-            <p className="text-base md:text-lg font-semibold">
-
-              &ldquo;The performance has improved as compared to the previous two consecutive academic years during which the pass rates were 3.21% and 3.2%, respectively.&rdquo;
-
-            </p>
-
-            <p className="text-sm mt-2">- Education Minister Birhanu</p>
-
-          </motion.div>
-
-          <motion.div variants={fadeIn}>
-
-            <Link href="/sign-up">
-
-              <Button className="bg-white text-purple-600 hover:bg-purple-100 text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
-
-                Join the Educational Revolution
-
-              </Button>
-
-            </Link>
-
-          </motion.div>
-
-        </motion.section>
-
-
-
-        <motion.section 
-
-          id="solution"
-
-          className="mb-16 md:mb-20"
-
-          initial="initial"
-
-          animate="animate"
-
-          variants={staggerChildren}
-
-        >
-
-          <motion.h3 
-
-            className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center"
-
-            variants={fadeIn}
-
-          >
-
-            Our Comprehensive Solution
-
-          </motion.h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-
-            <motion.div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg" variants={fadeIn}>
-
-              <h4 className="text-xl font-semibold mb-4 flex items-center">
-
-                <Users className="mr-2" /> For Students
-
-              </h4>
-
-              <ul className="list-disc list-inside space-y-2">
-
-                <li>Personalized learning paths</li>
-
-                <li>Interactive study materials</li>
-
-                <li>Practice exams and quizzes</li>
-
-                <li>Progress tracking and analytics</li>
-
-              </ul>
-
-            </motion.div>
-
-            <motion.div className="bg-white bg-opacity-10 p-6 rounded-lg shadow-lg" variants={fadeIn}>
-
-              <h4 className="text-xl font-semibold mb-4 flex items-center">
-
-                <BookOpen className="mr-2" /> For Teachers
-
-              </h4>
-
-              <ul className="list-disc list-inside space-y-2">
-
-                <li>Comprehensive teaching resources</li>
-
-                <li>Student performance insights</li>
-
-                <li>Automated grading and feedback</li>
-
-                <li>Professional development opportunities</li>
-
-              </ul>
-
-            </motion.div>
 
           </div>
 
-        </motion.section>
+
+
+          <div className="text-center max-w-5xl mx-auto">
+
+            <motion.h2 
+
+              className="text-4xl md:text-6xl font-bold mb-6 md:mb-8 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600"
+
+              variants={fadeIn}
+
+            >
 
 
 
-        <motion.section 
+              Revolutionizing Ethiopian Education
 
-          id="features"
+            </motion.h2>
 
-          className="mb-16 md:mb-20"
+            <motion.p 
 
-          initial="initial"
+              className="text-lg md:text-xl mb-8 md:mb-12 max-w-3xl mx-auto"
 
-          animate="animate"
+              variants={fadeIn}
 
-          variants={staggerChildren}
+            >
 
-        >
 
-          <motion.h2 
 
-            className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center"
+              FideLearn is dedicated to transforming the educational landscape for Ethiopian grade 12 students. 
 
-            variants={fadeIn}
+              We're addressing the critical need to improve national exam pass rates and empower both students and teachers.
 
-          >
+            </motion.p>
 
-            Key Features
+            <QuoteSection />
 
-          </motion.h2>
+            <CTAButton />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          </div>
 
-            {[
 
-              { title: "AI-Powered Learning", description: "Adaptive learning algorithms tailor content to each student's needs", icon: <Zap /> },
 
-              { title: "Comprehensive Curriculum", description: "Covers all subjects in the Ethiopian grade 12 syllabus", icon: <BookOpen /> },
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
 
-              { title: "Real-time Analytics", description: "Track progress and identify areas for improvement instantly", icon: <TrendingUp /> },
+            {features.map((feature, index: number) => (
 
-              { title: "Multilingual Support", description: "Content available in Amharic and English", icon: <Globe /> },
 
-              { title: "Offline Access", description: "Study materials accessible without internet connection", icon: <CheckCircle /> },
 
-              { title: "Collaborative Learning", description: "Connect with peers and teachers for group study sessions", icon: <Users /> },
+              <motion.div
 
-            ].map((feature, index) => (
+                key={index}
 
-              <motion.div 
+                className={`${feature.color} p-8 rounded-3xl hover:shadow-xl transition-all duration-300 border border-gray-100/50 backdrop-blur-sm`}
 
-                key={index} 
 
-                className="bg-white bg-opacity-10 p-6 rounded-lg"
 
                 variants={fadeIn}
 
+                whileHover={{ y: -5 }}
+
+
+
               >
 
-                <div className="text-3xl mb-4">{feature.icon}</div>
 
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
 
-                <p>{feature.description}</p>
+                <div className="flex items-center space-x-4 mb-4">
+
+
+
+                  <div className="p-3 rounded-2xl bg-white shadow-sm">
+
+
+
+                    {feature.icon}
+
+
+
+                  </div>
+
+
+
+                  <h3 className="text-xl font-semibold">{feature.title}</h3>
+
+
+
+                </div>
+
+
+
+                <p className="text-gray-600 leading-relaxed">
+
+
+
+                  {feature.description}
+
+
+
+                </p>
+
+
 
               </motion.div>
 
             ))}
+
+
 
           </div>
 
@@ -671,43 +746,51 @@ const LandingPage = () => {
 
           id="impact"
 
-          className="mb-16 md:mb-20"
-
-          initial="initial"
-
-          animate="animate"
+          className="my-32"
 
           variants={fadeIn}
 
         >
 
-          <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Our Impact</h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
 
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg text-center shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-              <h4 className="text-4xl md:text-5xl font-bold mb-2">100,000+</h4>
+            {stats.map((stat, index: number) => (
 
-              <p className="text-xl">Students Empowered</p>
 
-            </div>
 
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg text-center shadow-lg transform hover:scale-105 transition-transform duration-300">
+              <motion.div
 
-              <h4 className="text-4xl md:text-5xl font-bold mb-2">35%</h4>
+                key={index}
 
-              <p className="text-xl">Average Grade Improvement</p>
+                className={`${stat.color} p-8 rounded-3xl text-center relative overflow-hidden group backdrop-blur-sm`}
 
-            </div>
 
-            <div className="bg-white bg-opacity-10 p-6 rounded-lg text-center shadow-lg transform hover:scale-105 transition-transform duration-300">
 
-              <h4 className="text-4xl md:text-5xl font-bold mb-2">500+</h4>
+                whileHover={{ scale: 1.02 }}
 
-              <p className="text-xl">Partner Schools</p>
+              >
 
-            </div>
+
+
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:translate-x-full transition-transform duration-1000" />
+
+
+
+                <h4 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+
+                  {stat.number}
+
+                </h4>
+
+                <p className="text-xl text-gray-600">{stat.label}</p>
+
+              </motion.div>
+
+            ))}
+
+
 
           </div>
 
@@ -719,252 +802,324 @@ const LandingPage = () => {
 
           id="testimonials"
 
-          className="mb-16 md:mb-20"
+          className="my-32"
 
-          initial="initial"
 
-          animate="animate"
-
-          variants={staggerChildren}
-
-        >
-
-          <motion.h2 
-
-            className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center"
 
             variants={fadeIn}
 
-          >
+        >
 
-            Success Stories
 
-          </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            {[
 
-              { name: "Abebe Kebede", role: "Student", quote: "FideLearn transformed my study habits. I went from struggling to excelling in my exams!", image: "https://i.pravatar.cc/150?img=11" },
 
-              { name: "Tigist Haile", role: "Teacher", quote: "As a teacher, FideLearn has given me powerful tools to engage my students and track their progress effectively.", image: "https://i.pravatar.cc/150?img=5" }
+            {testimonials.map((testimonial, index: number) => (
 
-            ].map((testimonial, index) => (
+
 
               <motion.div 
 
                 key={index} 
 
-                className="bg-white bg-opacity-10 p-6 rounded-lg flex items-center"
+                className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+
+
 
                 variants={fadeIn}
 
+                whileHover={{ scale: 1.02 }}
+
+
+
               >
 
-                <img src={testimonial.image} alt={testimonial.name} className="w-20 h-20 rounded-full mr-4" />
+
+
+                <div className="flex items-start space-x-4">
+
+
+
+                  <img
+
+
+
+                    src={testimonial.image}
+
+
+
+                    alt={testimonial.name}
+
+
+
+                    className="w-16 h-16 rounded-full ring-4 ring-blue-50"
+
+
+
+                  />
+
+
 
                 <div>
 
-                  <p className="mb-2 italic">"{testimonial.quote}"</p>
+                    <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
 
-                  <p className="font-semibold">{testimonial.name}</p>
 
-                  <p className="text-sm">{testimonial.role}</p>
+
+                    <div className="flex items-center space-x-2">
+
+
+
+                      <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+
+
+
+                      <span className="text-gray-400">•</span>
+
+
+
+                      <span className="text-blue-600">{testimonial.role}</span>
+
+
 
                 </div>
+
+                  </div>
+
+
+
+                </div>
+
+
 
               </motion.div>
 
             ))}
 
+
+
           </div>
 
         </motion.section>
 
 
 
-        <motion.section 
+        <FAQSection />
 
-          id="faq"
 
-          className="mb-16 md:mb-20"
 
-          initial="initial"
+        <section className="text-center py-20">
 
-          animate="animate"
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">
 
-          variants={staggerChildren}
+            Ready to Transform Your Education?
 
-        >
+          </h2>
 
-          <motion.h2 
+          <CTAButton />
 
-            className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center"
-
-            variants={fadeIn}
-
-          >
-
-            Frequently Asked Questions
-
-          </motion.h2>
-
-              <motion.div 
-
-            className="max-w-3xl mx-auto bg-white bg-opacity-10 rounded-lg overflow-hidden shadow-xl"
-
-
-                variants={fadeIn}
-
-              >
-
-            {[
-
-
-
-              { 
-
-
-
-                question: "How does FideLearn improve exam performance?", 
-
-
-
-                answer: "FideLearn uses AI-powered adaptive learning to identify and address each student's unique strengths and weaknesses, providing personalized study plans and targeted practice. This tailored approach ensures that students focus on areas where they need the most improvement, leading to better exam performance."
-
-
-
-              },
-
-
-
-              { 
-
-
-
-                question: "Is FideLearn accessible in rural areas?", 
-
-
-
-                answer: "Yes, FideLearn is designed to work offline, allowing students in areas with limited internet connectivity to access study materials and track their progress. Once the initial content is downloaded, students can continue learning without an internet connection, making it accessible even in the most remote areas of Ethiopia."
-
-
-
-              },
-
-
-
-              { 
-
-
-
-                question: "How does FideLearn support teachers?", 
-
-
-
-                answer: "FideLearn provides teachers with comprehensive teaching resources, automated grading tools, and detailed insights into student performance. This allows teachers to tailor their instruction effectively, identify struggling students, and focus on areas where the class needs more support. Additionally, FideLearn offers professional development resources to help teachers enhance their skills and stay up-to-date with the latest educational methodologies."
-
-
-
-              },
-
-
-
-              { 
-
-
-
-                question: "Can FideLearn be used in schools and at home?", 
-
-
-
-                answer: "Absolutely! FideLearn is designed for both classroom use and independent study, providing a seamless learning experience across different environments. Teachers can integrate FideLearn into their lesson plans, while students can continue their studies at home, ensuring consistent and continuous learning."
-
-
-
-              }
-
-
-
-            ].map((faq, index) => (
-
-
-
-              <FAQItem key={index} question={faq.question} answer={faq.answer} />
-
-
-
-            ))}
-
-
-
-          </motion.div>
-
-
-        </motion.section>
-
-
-
-        <motion.section 
-
-          className="mb-16 md:mb-20"
-
-          initial="initial"
-
-          animate="animate"
-
-          variants={fadeIn}
-
-        >
-
-          <h3 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center">Ready to Transform Your Education?</h3>
-
-          <div className="text-center">
-
-            <Link href="/sign-up">
-
-              <Button className="bg-white text-purple-600 hover:bg-purple-100 text-base md:text-lg px-6 md:px-8 py-3 md:py-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
-
-                Get Started Now
-
-              </Button>
-
-            </Link>
-
-          </div>
-
-        </motion.section>
+        </section>
 
       </main>
 
 
 
-      <footer className="container mx-auto px-4 py-6 md:py-8 mt-10 md:mt-20 text-center border-t border-white border-opacity-20">
+      <footer className="bg-gray-50 border-t border-gray-100">
 
-        <p className="text-sm md:text-base">&copy; 2024 FideLearn. Empowering Ethiopian Education.</p>
-        <p className="text-sm md:text-base">By kirubel</p>
 
-        <div className="mt-3 md:mt-4 space-x-4">
 
-          <a href="#" className="text-xs md:text-sm hover:underline">Privacy Policy</a>
+        <div className="container mx-auto px-4 py-12">
 
-          <a href="#" className="text-xs md:text-sm hover:underline">Terms of Service</a>
+          <p className="text-sm md:text-base">&copy; 2024 FideLearn. Empowering Ethiopian Education.</p>
 
-          <a href="#" className="text-xs md:text-sm hover:underline">Contact Us</a>
+          <p className="text-sm md:text-base">By kirubel</p>
+
+          <div className="mt-3 md:mt-4 space-x-4">
+
+            <a href="#" className="text-xs md:text-sm hover:underline">Privacy Policy</a>
+
+            <a href="#" className="text-xs md:text-sm hover:underline">Terms of Service</a>
+
+            <a href="#" className="text-xs md:text-sm hover:underline">Contact Us</a>
+
+          </div>
 
         </div>
 
       </footer>
 
+
+
     </div>
 
+
+
   );
+
+
 
 };
 
 
 
+
+
 export default LandingPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
