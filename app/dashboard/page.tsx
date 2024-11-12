@@ -2,7 +2,7 @@
 
 import StudentDashboard from '@/components/Dashboard/Student/StudentDashboard';
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
   return <StudentDashboard />;
 }
 
