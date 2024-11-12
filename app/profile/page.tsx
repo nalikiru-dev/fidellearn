@@ -18,7 +18,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 import { useToast } from '@/hooks/use-toast';
 
-import { Toast } from '@/components/ui/toast';
+import { Toast } from '@/components/ui/profile-toast';
 
 
 
@@ -233,5 +233,3 @@ export default function ProfilePage() {
   );
 
 }
-
-
