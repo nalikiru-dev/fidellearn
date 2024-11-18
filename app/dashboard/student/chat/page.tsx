@@ -5,9 +5,7 @@ import Chat from '@/components/app-chat-page';
 export default function StudentChatPage() {
   return (
     <ProtectedRoute allowedRoles={['student']}>
-      <DashboardLayout role="student">
         <Chat />
-      </DashboardLayout>
     </ProtectedRoute>
   );
 }
