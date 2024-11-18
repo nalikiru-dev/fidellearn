@@ -9,11 +9,13 @@ import { UserButton } from "@clerk/nextjs";
 import {
     LayoutDashboard, BookOpen, GraduationCap, Calendar,
     Users, Settings, BarChart, FileText, MessagesSquare,
-    HelpCircle, LogOut, Bell, Menu, X, Search
+    HelpCircle, LogOut, Bell, Menu, X, Search,
+    Rocket, Brain, Target
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Input } from "@/components/ui/input";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -38,13 +40,16 @@ const communityLinks = [
   { title: 'Notifications', icon: Bell, href: '/dashboard/notifications', variant: 'ghost', badge: '5' }
 ];
 
+const helpLinks = [
+  { title: 'Getting Started', icon: Rocket, href: '/dashboard/help?section=overview', variant: 'ghost' },
+  { title: 'FAQ', icon: HelpCircle, href: '/dashboard/help?section=faq', variant: 'ghost' }
+];
+
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => {
   const pathname = usePathname();
   const { signOut } = useClerk();
   const router = useRouter();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -58,152 +63,196 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, role }) => 
     router.push('/');
   };
 
-  const LinkButton = ({ item }: { item: any }) => (
-    <Link href={item.href === '/dashboard' ? `/dashboard/${role}` : item.href}>
-      <Button
-        variant={pathname === item.href ? 'secondary' : 'ghost'}
-        className={cn(
-          'w-full justify-start gap-2',
-          pathname === item.href ? 'bg-gray-700 text-white' : 'text-gray-300 hover:text-white hover:bg-gray-700'
-        )}
-      >
-        <item.icon className="h-4 w-4" />
-        <span>{item.title}</span>
-        {item.badge && (
-          <span className="ml-auto bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs">
-            {item.badge}
+  const NavigationContent = () => (
+    <div className="space-y-6">
+      <div className="flex items-center gap-2 px-2">
+        <Brain className="w-8 h-8 text-primary" />
+        <h2 className="text-2xl font-bold">Fidelearn</h2>
+      </div>
+
+      {/* Navigation Sections */}
+      <div className="space-y-6">
+        <div>
+          <h3 className="px-4 text-sm font-semibold text-muted-foreground mb-2">Main</h3>
+          <nav className="space-y-1">
+            {mainLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <span className={cn(
+                  "flex items-center gap-3 px-4 py-2 text-sm rounded-lg transition-colors",
+                  pathname === link.href ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+                )}>
+                  <link.icon className="w-4 h-4" />
+                  {link.title}
+                  {link.badge && (
+                    <span className="ml-auto bg-primary-foreground/10 px-2 py-0.5 rounded-full text-xs">
+                      {link.badge}
+                    </span>
+                  )}
+                </span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div>
+          <h3 className="px-4 text-sm font-semibold text-muted-foreground mb-2">Learning</h3>
+          <nav className="space-y-1">
+            {learningLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <span className={cn(
+                  "flex items-center gap-3 px-4 py-2 text-sm rounded-lg transition-colors",
+                  pathname === link.href ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+                )}>
+                  <link.icon className="w-4 h-4" />
+                  {link.title}
+                </span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div>
+          <h3 className="px-4 text-sm font-semibold text-muted-foreground mb-2">Community</h3>
+          <nav className="space-y-1">
+            {communityLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <span className={cn(
+                  "flex items-center gap-3 px-4 py-2 text-sm rounded-lg transition-colors",
+                  pathname === link.href ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+                )}>
+                  <link.icon className="w-4 h-4" />
+                  {link.title}
+                  {link.badge && (
+                    <span className="ml-auto bg-primary-foreground/10 px-2 py-0.5 rounded-full text-xs">
+                      {link.badge}
+                    </span>
+                  )}
+                </span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div>
+          <h3 className="px-4 text-sm font-semibold text-muted-foreground mb-2">Help & Support</h3>
+          <nav className="space-y-1">
+            {helpLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <span className={cn(
+                  "flex items-center gap-3 px-4 py-2 text-sm rounded-lg transition-colors",
+                  pathname === link.href ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+                )}>
+                  <link.icon className="w-4 h-4" />
+                  {link.title}
+                </span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* Bottom section */}
+      <div className="space-y-2">
+        <Link href="/dashboard/settings">
+          <span className={cn(
+            "flex items-center gap-3 px-4 py-2 text-sm rounded-lg transition-colors",
+            pathname === '/dashboard/settings' ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+          )}>
+            <Settings className="w-4 h-4" />
+            Settings
           </span>
-        )}
-      </Button>
-    </Link>
+        </Link>
+        <Button
+          variant="ghost"
+          className="w-full justify-start px-4"
+          onClick={handleSignOut}
+        >
+          <LogOut className="w-4 h-4 mr-3" />
+          Sign out
+        </Button>
+      </div>
+    </div>
   );
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
-      <AnimatePresence mode="wait">
-        <motion.aside
-          className={cn(
-            'fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-gray-900 to-gray-800',
-            'transform transition-transform duration-300 ease-in-out lg:relative',
-            isSidebarOpen || !isMobile ? 'translate-x-0' : '-translate-x-full'
-          )}
-          initial={false}
-          animate={isSidebarOpen || !isMobile ? 'open' : 'closed'}
-        >
-          {/* Logo */}
-          <div className="flex h-16 items-center px-6 border-b border-gray-700">
-            <Link href={`/dashboard/${role}`} className="flex items-center gap-2">
-              <div className="rounded-lg bg-primary p-1">
-                <BookOpen className="h-6 w-6" />
-              </div>
-              <span className="font-bold text-xl text-white">FideLearn</span>
+    <div className="min-h-screen bg-background">
+      <div className="flex">
+        {/* Sidebar for desktop */}
+        <aside className="hidden lg:block w-72 fixed inset-y-0 z-50 border-r bg-background">
+          <div className="flex h-14 items-center border-b px-6">
+            <Link href="/dashboard" className="flex items-center gap-2">
+              <Brain className="h-6 w-6 text-primary" />
+              <span className="font-bold text-xl">Fidelearn</span>
             </Link>
           </div>
-
-          {/* Navigation */}
-          <ScrollArea className="flex-1 px-4 py-6">
-            <div className="space-y-6">
-              {[
-                { title: 'Main', links: mainLinks },
-                { title: 'Learning', links: learningLinks },
-                { title: 'Community', links: communityLinks },
-              ].map((section) => (
-                <div key={section.title}>
-                  <h3 className="px-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                    {section.title}
-                  </h3>
-                  <nav className="mt-2 space-y-1">
-                    {section.links.map((item) => (
-                      <LinkButton key={item.href} item={item} />
-                    ))}
-                  </nav>
-                </div>
-              ))}
-            </div>
+          <ScrollArea className="h-[calc(100vh-3.5rem)] py-6 pr-4 pl-6">
+            <NavigationContent />
           </ScrollArea>
+        </aside>
 
-          {/* Footer */}
-          <div className="border-t border-gray-700 p-4">
-            <nav className="space-y-2">
-              {[
-                { href: '/dashboard/settings', icon: Settings, title: 'Settings' },
-                { href: '/help', icon: HelpCircle, title: 'Help Center' },
-              ].map((item) => (
-                <Link key={item.href} href={item.href}>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start gap-2 text-gray-300 hover:text-white hover:bg-gray-700"
-                  >
-                    <item.icon className="h-4 w-4" />
-                    <span>{item.title}</span>
-                  </Button>
+        {/* Main content wrapper */}
+        <div className="flex-1 lg:pl-72">
+          {/* Top Navigation Bar */}
+          <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="container flex h-14 items-center gap-4">
+              <div className="flex items-center gap-4 lg:hidden">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon" className="lg:hidden">
+                      <Menu className="h-5 w-5" />
+                      <span className="sr-only">Toggle navigation menu</span>
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="w-72 p-0">
+                    <ScrollArea className="h-full px-4 py-6">
+                      <NavigationContent />
+                    </ScrollArea>
+                  </SheetContent>
+                </Sheet>
+                <Link href="/dashboard" className="flex items-center gap-2 lg:hidden">
+                  <Brain className="h-5 w-5 text-primary" />
+                  <span className="font-bold">Fidelearn</span>
                 </Link>
-              ))}
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-2 text-gray-300 hover:text-white hover:bg-gray-700"
-                onClick={handleSignOut}
-              >
-                <LogOut className="h-4 w-4" />
-                <span>Log Out</span>
-              </Button>
-            </nav>
-          </div>
-        </motion.aside>
-      </AnimatePresence>
+              </div>
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Navbar with Search */}
-        <header className="bg-white border-b border-gray-200 h-16">
-          <div className="flex h-full items-center justify-between px-6">
-            <div className="flex items-center gap-2">
-              {isMobile && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                >
-                  <Menu className="h-5 w-5" />
-                </Button>
-              )}
-              <Button
-                variant="outline"
-                className="relative h-9 w-[300px] justify-start text-sm text-muted-foreground"
-                onClick={() => setOpen(true)}
-              >
-                <Search className="mr-2 h-4 w-4" />
-                <span>Search courses...</span>
-                <kbd className="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-                  <span className="text-xs">⌘</span>K
-                </kbd>
-              </Button>
+              <div className="flex-1 flex items-center justify-end gap-4">
+                <div className="w-full max-w-sm">
+                  <div className="relative group">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <Input
+                      placeholder="Search anything..."
+                      className="w-full pl-9 pr-4 bg-muted/50 border-muted-foreground/20 hover:bg-muted focus:bg-background transition-colors"
+                    />
+                  </div>
+                </div>
+                <nav className="flex items-center gap-2">
+                  <Button variant="ghost" size="icon" className="relative">
+                    <Bell className="h-5 w-5" />
+                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full" />
+                    <span className="sr-only">Notifications</span>
+                  </Button>
+                  <div className="h-5 w-px bg-border/50" />
+                  <UserButton 
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        avatarBox: "h-8 w-8"
+                      }
+                    }}
+                  />
+                </nav>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon">
-                <Bell className="h-5 w-5" />
-              </Button>
-              <UserButton afterSignOutUrl="/" />
-            </div>
-          </div>
-        </header>
+          </header>
 
-        {/* Main content */}
-        <main className="flex-1 overflow-y-auto bg-gray-100">
-          <div className="container mx-auto p-6">
-            {children}
-          </div>
-        </main>
+          {/* Main content */}
+          <main className="min-h-[calc(100vh-3.5rem)]">
+            <div className="container py-6">
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
-
-      {/* Mobile overlay */}
-      {isMobile && isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
     </div>
   );
 };
