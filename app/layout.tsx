@@ -29,6 +29,7 @@ export default function RootLayout({
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <html lang="en">
+        <meta name="google-site-verification" content="uLX_6anqHw7JVu1jbagH07gpFT5HVTMxkDH4hulq7qI" />
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
